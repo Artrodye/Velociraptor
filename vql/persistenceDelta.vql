@@ -1,0 +1,2 @@
+SELECT OSPath, Name, Data.value as Command
+FROM glob(globs="HKEY_LOCAL_MACHINE/SOFTWARE/Microsoft/Windows/CurrentVersion/Run/*", accessor="registry")
