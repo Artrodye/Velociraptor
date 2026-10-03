@@ -1,0 +1,32 @@
+
+PLAY [Install Velociraptor client on Debian endpoints] *************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [velo_linux]
+
+TASK [Verify Debian family] ****************************************************
+ok: [velo_linux] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Copy Velociraptor client package] ****************************************
+ok: [velo_linux]
+
+TASK [Install Velociraptor client package] *************************************
+ok: [velo_linux]
+
+TASK [Ensure Velociraptor service is enabled and running] **********************
+ok: [velo_linux]
+
+TASK [Read service status] *****************************************************
+ok: [velo_linux]
+
+TASK [Print Velociraptor service status] ***************************************
+ok: [velo_linux] => {
+    "msg": "Velociraptor status: active"
+}
+
+PLAY RECAP *********************************************************************
+velo_linux                 : ok=7    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
