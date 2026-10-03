@@ -1,0 +1,53 @@
+---
+- name: Install Velociraptor client on Debian endpoints
+  hosts: velociraptor_linux
+  become: true
+  gather_facts: true
+
+  vars:
+    velociraptor_package:
+      "velociraptor_client_0.77.2_amd64.deb"
+
+    remote_package:
+      "/tmp/{{ velociraptor_package }}"
+
+    velociraptor_service:
+      "velociraptor_client"
+
+  pre_tasks:
+    - name: Verify Debian family
+      ansible.builtin.assert:
+        that:
+          - ansible_facts['os_family'] == 'Debian'
+        fail_msg: "This playbook supports Debian-family systems only."
+
+  tasks:
+    - name: Copy Velociraptor client package
+      ansible.builtin.copy:
+        src: "files/{{ velociraptor_package }}"
+        dest: "{{ remote_package }}"
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Install Velociraptor client package
+      ansible.builtin.apt:
+        deb: "{{ remote_package }}"
+        state: present
+
+    - name: Ensure Velociraptor service is enabled and running
+      ansible.builtin.systemd:
+        name: "{{ velociraptor_service }}"
+        enabled: true
+        state: started
+        daemon_reload: true
+
+    - name: Read service status
+      ansible.builtin.command:
+        cmd: "systemctl is-active {{ velociraptor_service }}"
+      register: velociraptor_status
+      changed_when: false
+
+    - name: Print Velociraptor service status
+      ansible.builtin.debug:
+        msg: "Velociraptor status: {{ velociraptor_status.stdout }}"
