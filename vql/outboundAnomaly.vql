@@ -1,0 +1,3 @@
+SELECT *
+FROM netstat()
+WHERE status = "ESTAB"
