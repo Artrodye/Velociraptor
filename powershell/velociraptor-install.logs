@@ -1,0 +1,12 @@
+[*] Checking Velociraptor installation...
+[=] Velociraptor already installed. Installation skipped.
+[*] Service: Velociraptor
+[+] Velociraptor status:
+
+Name          Status StartType
+----          ------ ---------
+Velociraptor Running Automatic
+
+
+[+] Done.
+
